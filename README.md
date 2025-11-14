@@ -1,6 +1,6 @@
 # Real-Time-Object-Detection-With-Tracking
 
-# **Live App Link 🔗:** https://object-detection-with-tracking-9qeevyej7ki99mmyxvflfv.streamlit.app/
+[![Streamlit App](https://img.shields.io/badge/🚀_Live_Demo-Click_Here-2B82F6?style=for-the-badge)](https://object-detection-with-tracking-9qeevyej7ki99mmyxvflfv.streamlit.app/)
 
 # **1. App Structure**
 
