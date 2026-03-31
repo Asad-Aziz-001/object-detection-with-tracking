@@ -1,8 +1,8 @@
 # objectDetection.py
 import os
-os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "0"
-
 import streamlit as st
+import cv2
+import tempfile
 
 # cv2 headless fix - must be before any cv2 import
 import sys
