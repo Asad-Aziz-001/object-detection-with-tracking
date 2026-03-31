@@ -1,6 +1,5 @@
-streamlit 
-opencv-python-headless 
+streamlit
+opencv-python-headless
 ultralytics
-numpy 
+numpy
 filterpy
-yolo
