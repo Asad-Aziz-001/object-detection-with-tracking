@@ -1,8 +1,9 @@
 # objectDetection.py
 import os
 import streamlit as st
-import cv2
 import tempfile
+import cv2
+os.environ["QT_QPA_PLATFORM"] = "offscreen"
 
 # cv2 headless fix - must be before any cv2 import
 import sys
