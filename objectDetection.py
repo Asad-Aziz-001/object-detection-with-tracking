@@ -1,6 +1,21 @@
 # objectDetection.py
 import os
+os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "0"
+
 import streamlit as st
+
+# cv2 headless fix - must be before any cv2 import
+import sys
+import subprocess
+subprocess.run(
+    [sys.executable, "-m", "pip", "install", "opencv-python-headless", "--force-reinstall", "-q"],
+    capture_output=True
+)
+# Clear any cached cv2 module
+for mod in list(sys.modules.keys()):
+    if 'cv2' in mod:
+        del sys.modules[mod]
+
 import cv2
 import tempfile
 import numpy as np
@@ -111,11 +126,9 @@ def process_video(video_source):
             x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
             detections.append({'bbox': [x1, y1, x2, y2], 'score': float(score), 'cls': int(cls)})
 
-        # Predict trackers
         for tr in trackers:
             tr.predict()
 
-        # Match detections to trackers
         matched_det_idxs = set()
         matched_tracker_idxs = set()
         if detections and trackers:
@@ -134,15 +147,12 @@ def process_video(video_source):
                 iou_matrix[d_idx, :] = -1
                 iou_matrix[:, t_idx] = -1
 
-        # Add unmatched detections as new trackers
         for d_idx, det in enumerate(detections):
             if d_idx not in matched_det_idxs:
                 trackers.append(KalmanBoxTracker(det['bbox']))
 
-        # Remove old trackers
         trackers = [t for t in trackers if t.time_since_update <= 30]
 
-        # Draw trackers
         for tr in trackers:
             x1, y1, x2, y2 = map(int, tr.get_state())
             if x2 - x1 <= 0 or y2 - y1 <= 0:
@@ -152,7 +162,6 @@ def process_video(video_source):
             cv2.putText(frame, label, (x1, max(0, y1 - 10)),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
-        # Show detections
         for det in detections:
             x1, y1, x2, y2 = det['bbox']
             label = f"{model.names[det['cls']]} {det['score']:.2f}"
