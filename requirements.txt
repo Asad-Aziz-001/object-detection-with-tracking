@@ -1,5 +1,15 @@
 streamlit
-opencv-python-headless
-ultralytics
 numpy
 filterpy
+opencv-python-headless
+ultralytics --no-deps
+torch
+torchvision
+pillow
+pyyaml
+requests
+psutil
+matplotlib
+pandas
+seaborn
+scipy
