@@ -3,4 +3,3 @@ opencv-python-headless
 ultralytics
 numpy
 filterpy
-opencv-python-headless==4.13.0.92
