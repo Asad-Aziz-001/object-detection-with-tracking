@@ -29,7 +29,7 @@ os.environ["QT_QPA_PLATFORM"] = "offscreen"
 # ------------------------------
 st.set_page_config(
     page_title="AI Object Detection & Tracking", 
-    page_icon="🎯",
+    page_icon="🔎",
     layout="wide"
 )
 
