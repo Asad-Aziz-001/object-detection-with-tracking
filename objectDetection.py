@@ -1,3 +1,33 @@
+import streamlit as st
+import os
+import warnings
+import sys
+import logging
+
+# ============================================
+# SUPPRESS ALL WARNINGS
+# ============================================
+# Suppress all Python warnings
+warnings.filterwarnings('ignore')
+
+# Suppress specific filterpy syntax warning
+warnings.filterwarnings('ignore', category=SyntaxWarning, module='filterpy')
+
+# Set Ultralytics to use writable directory
+os.environ["YOLO_CONFIG_DIR"] = "/tmp/ultralytics"
+os.environ["YOLO_VERBOSE"] = "False"
+os.environ["ULTRALYTICS_VERBOSE"] = "False"
+
+# Suppress logging for ultralytics
+logging.getLogger("ultralytics").setLevel(logging.ERROR)
+
+# Suppress filterpy warnings
+try:
+    import filterpy
+    filterpy.common.helpers.__warningregistry__ = {}
+except:
+    pass
+
 # objectDetection.py
 import os
 import streamlit as st
@@ -8,21 +38,6 @@ from ultralytics import YOLO
 from sort import Sort
 import warnings
 import logging
-
-# Suppress all warnings
-warnings.filterwarnings('ignore')
-
-# Suppress Ultralytics warnings
-os.environ["YOLO_VERBOSE"] = "False"
-os.environ["ULTRALYTICS_VERBOSE"] = "False"
-
-# Suppress filterpy warning
-import sys
-if not sys.warnoptions:
-    warnings.filterwarnings('ignore', category=SyntaxWarning)
-
-# Set environment variable for headless operation
-os.environ["QT_QPA_PLATFORM"] = "offscreen"
 
 # ------------------------------
 # PAGE CONFIG & CSS
