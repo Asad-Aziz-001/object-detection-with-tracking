@@ -527,8 +527,10 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     st.markdown('<div class="sidebar-section">Input Source</div>', unsafe_allow_html=True)
+    
+    # ✅ FIXED: Added proper label to radio
     source_type = st.radio(
-        "Input Source",
+        "Select input source",
         ["📹  Upload Video", "🖼️  Upload Image", "📷  Webcam"],
         label_visibility="collapsed"
     )
@@ -576,7 +578,7 @@ st.markdown("""
 # ============================================
 # STATS BAR
 # ============================================
-st.markdown("""
+st.markdown(f"""
 <div class="stats-bar">
     <div class="stat-cell">
         <div class="stat-label">Model</div>
@@ -592,7 +594,7 @@ st.markdown("""
     </div>
     <div class="stat-cell">
         <div class="stat-label">Threshold</div>
-        <div class="stat-value orange">""" + f"{conf_thresh:.2f}" + """</div>
+        <div class="stat-value orange">{conf_thresh:.2f}</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -671,9 +673,7 @@ def process_video(video_path):
         if len(tracks) > 0:
             for track in tracks:
                 x1, y1, x2, y2, tid = [int(v) for v in track]
-                # Neon green bounding box
                 cv2.rectangle(frame_out, (x1, y1), (x2, y2), (0, 230, 120), 2)
-                # Track ID pill
                 label = f" ID {tid} "
                 (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.55, 1)
                 cv2.rectangle(frame_out, (x1, max(0, y1-22)), (x1+tw+4, max(0, y1)), (0, 180, 80), -1)
@@ -688,6 +688,7 @@ def process_video(video_path):
                         (x1, y2 + 16), cv2.FONT_HERSHEY_SIMPLEX, 0.48, (40, 180, 255), 1, cv2.LINE_AA)
 
         frame_rgb = cv2.cvtColor(frame_out, cv2.COLOR_BGR2RGB)
+        # ✅ FIXED: Changed to width='stretch'
         frame_placeholder.image(frame_rgb, channels="RGB", width="stretch")
 
     cap.release()
@@ -717,9 +718,7 @@ def process_image(image_bytes):
                 x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
                 cls_name = model.names[int(cls)]
                 label = f"{cls_name}  {score:.2f}"
-                # Cyan box
                 cv2.rectangle(img_out, (x1, y1), (x2, y2), (0, 210, 255), 2)
-                # Label background
                 (tw, th), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.52, 1)
                 cv2.rectangle(img_out, (x1, max(0, y1-20)), (x1+tw+6, max(0, y1)), (0, 140, 200), -1)
                 cv2.putText(img_out, label, (x1+3, max(12, y1-4)),
@@ -739,6 +738,7 @@ def process_image(image_bytes):
         </div>
         """, unsafe_allow_html=True)
         img_rgb = cv2.cvtColor(img_out, cv2.COLOR_BGR2RGB)
+        # ✅ FIXED: Changed to width='stretch'
         st.image(img_rgb, channels="RGB", width="stretch")
 
     with col_info:
@@ -790,7 +790,8 @@ if source_type == "Upload Video":
             </div>
             <div class="panel-body">
         """, unsafe_allow_html=True)
-        st.video(uploaded_file)
+        # ✅ FIXED: Changed to width='stretch'
+        st.video(uploaded_file, width="stretch")
         st.markdown('</div></div>', unsafe_allow_html=True)
 
         tfile = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
@@ -837,6 +838,7 @@ elif source_type == "Upload Image":
                 </div>
                 <div class="panel-body">
             """, unsafe_allow_html=True)
+            # ✅ FIXED: Changed to width='stretch'
             st.image(uploaded_img, caption="", width="stretch")
             st.markdown('</div></div>', unsafe_allow_html=True)
 
