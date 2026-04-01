@@ -528,7 +528,7 @@ with st.sidebar:
 
     st.markdown('<div class="sidebar-section">Input Source</div>', unsafe_allow_html=True)
     source_type = st.radio(
-        "",
+        "Input Source",
         ["📹  Upload Video", "🖼️  Upload Image", "📷  Webcam"],
         label_visibility="collapsed"
     )
@@ -688,7 +688,7 @@ def process_video(video_path):
                         (x1, y2 + 16), cv2.FONT_HERSHEY_SIMPLEX, 0.48, (40, 180, 255), 1, cv2.LINE_AA)
 
         frame_rgb = cv2.cvtColor(frame_out, cv2.COLOR_BGR2RGB)
-        frame_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+        frame_placeholder.image(frame_rgb, channels="RGB", width="stretch")
 
     cap.release()
     st.session_state.run_tracking = False
@@ -739,7 +739,7 @@ def process_image(image_bytes):
         </div>
         """, unsafe_allow_html=True)
         img_rgb = cv2.cvtColor(img_out, cv2.COLOR_BGR2RGB)
-        st.image(img_rgb, channels="RGB", use_container_width=True)
+        st.image(img_rgb, channels="RGB", width="stretch")
 
     with col_info:
         st.markdown(f"""
@@ -837,7 +837,7 @@ elif source_type == "Upload Image":
                 </div>
                 <div class="panel-body">
             """, unsafe_allow_html=True)
-            st.image(uploaded_img, caption="", use_container_width=True)
+            st.image(uploaded_img, caption="", width="stretch")
             st.markdown('</div></div>', unsafe_allow_html=True)
 
         with col_btn:
