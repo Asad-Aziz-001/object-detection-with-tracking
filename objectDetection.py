@@ -9,9 +9,17 @@ from sort import Sort
 import warnings
 import logging
 
-# Suppress warnings
+# Suppress all warnings
 warnings.filterwarnings('ignore')
-logging.getLogger("ultralytics").setLevel(logging.ERROR)
+
+# Suppress Ultralytics warnings
+os.environ["YOLO_VERBOSE"] = "False"
+os.environ["ULTRALYTICS_VERBOSE"] = "False"
+
+# Suppress filterpy warning
+import sys
+if not sys.warnoptions:
+    warnings.filterwarnings('ignore', category=SyntaxWarning)
 
 # Set environment variable for headless operation
 os.environ["QT_QPA_PLATFORM"] = "offscreen"
