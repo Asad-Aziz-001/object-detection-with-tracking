@@ -33,7 +33,7 @@ from sort import Sort
 # ============================================
 st.set_page_config(
     page_title="NeuralEye — Object Detection",
-    page_icon="⬡",
+    page_icon="🔎",
     layout="wide",
     initial_sidebar_state="expanded"
 )
