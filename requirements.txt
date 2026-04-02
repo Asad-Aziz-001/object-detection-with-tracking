@@ -1,5 +1,5 @@
 streamlit==1.55.0
 numpy==1.26.4
 filterpy==1.4.5
-opencv-python-headless==4.8.1.78
-ultralytics==8.0.237
+opencv-python-headless==4.7.0.72
+ultralytics==8.0.100
